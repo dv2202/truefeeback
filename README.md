@@ -1,5 +1,4 @@
 
-```
 # TrueFeedback
 
 TrueFeedback is a Next.js and TypeScript project aimed at providing a platform for users to sign in and give feedback anonymously, where only the username is visible. The project is currently ongoing and aims to incorporate various features to enhance user experience and security.
@@ -45,5 +44,3 @@ Contributions to TrueFeedback are welcome! If you have any ideas for new feature
 
 This project is licensed under the [MIT License](LICENSE).
 ```
-
-Feel free to customize it further to suit your project's specific needs!
