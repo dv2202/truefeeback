@@ -43,6 +43,7 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
+  
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
@@ -63,6 +64,7 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
   },
+
   session: {
     strategy: 'jwt',
   },
