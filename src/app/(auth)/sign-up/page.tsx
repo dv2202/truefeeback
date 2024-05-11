@@ -63,6 +63,7 @@ const page = () => {
           description: response.data.message, 
         })
         router.replace(`/verify/${username}`)
+        setIsSubmitting(false)
       } catch (error) {
           console.log("error un signup of user",error)
           const axiosError = error as AxiosError<ApiResponce>
