@@ -1,12 +1,11 @@
 'use client';
 
-// import { MessageCard } from '@/components/MessageCard';
 import { Button } from '@/components/ui/button';
-// import { Separator } from '@/components/ui/separator';
-// import { Switch } from '@/components/ui/switch';
+import { Separator } from '@/components/ui/separator';
+import { Switch } from '@/components/ui/switch';
 import { useToast } from '@/components/ui/use-toast';
 import { Message } from '@/model/User';
-// import { ApiResponse } from '@/types/ApiResponse';
+import { ApiResponce } from '@/types/ApiResponse';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios, { AxiosError } from 'axios';
 import { Loader2, RefreshCcw } from 'lucide-react';
@@ -14,7 +13,8 @@ import { User } from 'next-auth';
 import { useSession } from 'next-auth/react';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-// import { AcceptMessageSchema } from '@/schemas/acceptMessageSchema';
+import { acceptMessageSchema } from '@/schema/acceptMessageSchema';
+import MessageCard from '@/components/MessageCard';
 
 function UserDashboard() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -30,7 +30,7 @@ function UserDashboard() {
   const { data: session } = useSession();
 
   const form = useForm({
-    resolver: zodResolver(AcceptMessageSchema),
+    resolver: zodResolver(acceptMessageSchema),
   });
 
   const { register, watch, setValue } = form;
@@ -39,10 +39,10 @@ function UserDashboard() {
   const fetchAcceptMessages = useCallback(async () => {
     setIsSwitchLoading(true);
     try {
-      const response = await axios.get<ApiResponse>('/api/accept-messages');
+      const response = await axios.get<ApiResponce>('/api/accept-messages');
       setValue('acceptMessages', response.data.isAcceptingMessages);
     } catch (error) {
-      const axiosError = error as AxiosError<ApiResponse>;
+      const axiosError = error as AxiosError<ApiResponce>;
       toast({
         title: 'Error',
         description:
@@ -60,7 +60,7 @@ function UserDashboard() {
       setIsLoading(true);
       setIsSwitchLoading(false);
       try {
-        const response = await axios.get<ApiResponse>('/api/get-messages');
+        const response = await axios.get<ApiResponce>('/api/get-messages');
         setMessages(response.data.messages || []);
         if (refresh) {
           toast({
@@ -69,7 +69,7 @@ function UserDashboard() {
           });
         }
       } catch (error) {
-        const axiosError = error as AxiosError<ApiResponse>;
+        const axiosError = error as AxiosError<ApiResponce>;
         toast({
           title: 'Error',
           description:
@@ -96,7 +96,7 @@ function UserDashboard() {
   // Handle switch change
   const handleSwitchChange = async () => {
     try {
-      const response = await axios.post<ApiResponse>('/api/accept-messages', {
+      const response = await axios.post<ApiResponce>('/api/accept-messages', {
         acceptMessages: !acceptMessages,
       });
       setValue('acceptMessages', !acceptMessages);
@@ -105,7 +105,7 @@ function UserDashboard() {
         variant: 'default',
       });
     } catch (error) {
-      const axiosError = error as AxiosError<ApiResponse>;
+      const axiosError = error as AxiosError<ApiResponce>;
       toast({
         title: 'Error',
         description:
@@ -117,7 +117,7 @@ function UserDashboard() {
   };
 
   if (!session || !session.user) {
-    return <div></div>;
+    return <div>Please Login</div>;
   }
 
   const { username } = session.user as User;
