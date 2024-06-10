@@ -12,7 +12,7 @@ import { signInSchema } from "@/schema/signInSchema"
 import { signIn } from "next-auth/react"
 
 
-const page = () => {
+const SignInPage = () => {
   const {toast} = useToast()
   const router = useRouter()
 
@@ -99,4 +99,4 @@ return (
   );
 }
 
-export default page
+export default SignInPage
