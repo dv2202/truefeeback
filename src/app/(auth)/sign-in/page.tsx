@@ -1,25 +1,18 @@
 'use client'
+
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useRouter } from "next/navigation"
 import * as z  from "zod"
 import { useForm } from "react-hook-form"
-import Link from 'next/link'
-import {useEffect, useState} from 'react'
-import {useDebounceCallback, useDebounceValue} from 'usehooks-ts'
 import { useToast } from "@/components/ui/use-toast"
-import { signUpSchema } from "@/schema/signUpSchema"
-import axios, {AxiosError} from "axios"
-import { ApiResponce } from "@/types/ApiResponse"
 import { Form,FormField,FormLabel,FormMessage,FormItem, FormControl } from "@/components/ui/form"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Loader2 } from "lucide-react"
 import { signInSchema } from "@/schema/signInSchema"
 import { signIn } from "next-auth/react"
 
+
 const page = () => {
-
-
   const {toast} = useToast()
   const router = useRouter()
 
@@ -31,8 +24,6 @@ const page = () => {
       password:'',
     }
   })
-
-
    const onSubmit = async (data: z.infer<typeof signInSchema>) => {
       const result = await signIn('credentials', {
         redirect: false,
